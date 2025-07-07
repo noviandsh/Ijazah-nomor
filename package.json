@@ -1,0 +1,17 @@
+{
+  "name": "ijazah",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "multer": "^2.0.1",
+    "pdf2json": "^3.1.6",
+    "xlsx": "^0.18.5"
+  }
+}
