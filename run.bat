@@ -1,2 +1,4 @@
-cd "C:/user/folder/server"
+@echo off
+cd /D "$~dp0"
 node index.js
+pause

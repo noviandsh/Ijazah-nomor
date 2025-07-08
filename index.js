@@ -46,8 +46,12 @@ const appendToExcel = (ijazahData) => {
 app.use(express.static('public'))
 app.listen(3000, () => console.log(`listening on ${3000}`))
 
-app.post('/upload', upload.array('file', 10), (req, res) => {
+app.post('/upload', upload.array('files', 10), (req, res) => {
     let ijazahData = []
+
+    if (!req.files || req.files.length === 0) {
+        return res.status(400).send("Tidak ada file diunggah.");
+    }
     req.files.forEach(file => {
         const filePath = file.path
         const pdfParser = new PDFParser()
@@ -55,7 +59,6 @@ app.post('/upload', upload.array('file', 10), (req, res) => {
 
         pdfParser.on("pdfParser_dataError", (errData) =>
             console.error(errData.parserError)
-
         )
 
         pdfParser.on("pdfParser_dataReady", (pdfData) => {
@@ -76,7 +79,9 @@ app.post('/upload', upload.array('file', 10), (req, res) => {
 
         pdfParser.loadPDF(filePath)
     })
-    res.send("Berhasil upload " + req.files.length + " file!");
+    const filenames = req.files.map(f => f.originalname).join(", ");
+    res.send(`Berhasil upload file: ${filenames}`);
+    // res.send("Berhasil upload " + req.files.length + " file!");
 })
 
 

@@ -8,11 +8,28 @@
 </head>
 
 <body>
-    <form action="/upload" method="POST" enctype="multipart/form-data">
-        <input type="file" name="file" multiple />
+    <form id="upload-form" action="/upload" method="POST" enctype="multipart/form-data">
+        <input id="file-input" type="file" name="files" multiple />
         <button type="submit">Upload</button>
     </form>
+    <script>
+        document.getElementById("upload-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
 
+            fetch("/upload", {
+                method: "POST",
+                body: formData
+            })
+                .then(res => res.text())
+                .then(msg => {
+                    alert(msg)
+                    document.getElementById('file-input').value = null
+                })
+                .catch(err => alert("Error: " + err.message));
+        });
+
+    </script>
 </body>
 
 </html>
